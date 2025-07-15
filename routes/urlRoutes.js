@@ -102,3 +102,29 @@ router.delete("/shorten/:shortCode", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+// GET /shorten/:shortCode/stats — Get access statistics
+router.get("/shorten/:shortCode/stats", async (req, res) => {
+  const { shortCode } = req.params;
+
+  try {
+    const urlDoc = await Url.findOne({ shortCode });
+
+    if (!urlDoc) {
+      return res.status(404).json({ error: "Short URL not found" });
+    }
+
+    // Send only stats
+    res.status(200).json({
+      id: urlDoc._id,
+      url: urlDoc.url,
+      shortCode: urlDoc.shortCode,
+      createdAt: urlDoc.createdAt,
+      updatedAt: urlDoc.updatedAt,
+      accessCount: urlDoc.accessCount,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+git
