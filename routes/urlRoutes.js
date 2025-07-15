@@ -84,3 +84,21 @@ router.put("/shorten/:shortCode", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+// DELETE /shorten/:shortCode — Remove a short URL
+router.delete("/shorten/:shortCode", async (req, res) => {
+  const { shortCode } = req.params;
+
+  try {
+    const deleted = await Url.findOneAndDelete({ shortCode });
+
+    if (!deleted) {
+      return res.status(404).json({ error: "Short URL not found" });
+    }
+
+    // Successfully deleted
+    res.status(204).send(); // No content
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
