@@ -53,3 +53,34 @@ router.get("/shorten/:shortCode", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+// PUT /shorten/:shortCode — Update original URL
+router.put("/shorten/:shortCode", async (req, res) => {
+  const { shortCode } = req.params;
+  const { url } = req.body;
+
+  // ✅ Basic validation
+  if (!url || typeof url !== "string") {
+    return res
+      .status(400)
+      .json({ error: "URL is required and must be a string" });
+  }
+
+  try {
+    // Find and update the URL
+    const updated = await Url.findOneAndUpdate(
+      { shortCode },
+      { url },
+      { new: true, runValidators: true } // return updated doc
+    );
+
+    // If not found
+    if (!updated) {
+      return res.status(404).json({ error: "Short URL not found" });
+    }
+
+    res.status(200).json(updated);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
