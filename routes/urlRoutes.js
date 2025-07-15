@@ -29,3 +29,27 @@ router.post("/shorten", async (req, res) => {
 });
 
 module.exports = router;
+
+// GET /shorten/:shortCode — Retrieve original URL
+router.get("/shorten/:shortCode", async (req, res) => {
+  const { shortCode } = req.params;
+
+  try {
+    // Find the document with this shortCode
+    const urlDoc = await Url.findOne({ shortCode });
+
+    // If not found, return 404
+    if (!urlDoc) {
+      return res.status(404).json({ error: "Short URL not found" });
+    }
+
+    // Increment accessCount
+    urlDoc.accessCount += 1;
+    await urlDoc.save();
+
+    // Return the full object
+    res.status(200).json(urlDoc);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
