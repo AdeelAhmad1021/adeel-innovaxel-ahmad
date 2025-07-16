@@ -103,7 +103,7 @@ router.delete("/shorten/:shortCode", async (req, res) => {
   }
 });
 
-// GET /shorten/:shortCode/stats — Get access statistics
+// GET /shorten/:shortCode/stats — Get access statistics for short url
 router.get("/shorten/:shortCode/stats", async (req, res) => {
   const { shortCode } = req.params;
 
@@ -127,4 +127,3 @@ router.get("/shorten/:shortCode/stats", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-git
