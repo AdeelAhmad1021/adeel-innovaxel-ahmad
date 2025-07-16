@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 
 // ✅ Register routes
-app.use("/", urlRoutes);
+app.use("/api", urlRoutes);
 
 // ✅ Connect to MongoDB
 mongoose
