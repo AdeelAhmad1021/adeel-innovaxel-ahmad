@@ -123,17 +123,6 @@ Frontend runs at: `http://localhost:3000`
 
 ---
 
-## 🤔 Improvements You Can Add
-
-* Copy-to-clipboard button for short URLs
-* Add loading indicators and spinners
-* Frontend-side URL validation
-* Redirect support via backend (`res.redirect(url)`) for real shortener behavior
-* Hosting backend on Render, frontend on Vercel
-* Use Helmet and Rate Limiting for security
-
----
-
 ## 🤎 Author
 
 **Adeel Ahmad**
